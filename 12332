@@ -1,103 +1,197 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-namespace ConsoleApp1
+using System.Threading.Tasks;
+
+namespace СевероЗападный
 {
     class Program
     {
-        struct element
+
+        struct Element
         {
-            public int delivery { get; set; }
-            public int value { get; set; }
-            public static int FingMinElement(int a, int b)
+
+            public int Delivery { get; set; }
+            public int Value { get; set; }
+            public static int FindMinElement(int a, int b)
             {
                 if (a > b) return b;
                 if (a == b) { return a; }
                 else return a;
             }
 
-            static void Main(string[] args)
-            {
-                Console.BackgroundColor = ConsoleColor.White;
-                Console.ForegroundColor = ConsoleColor.Black;
-                int i = 0;
-                int j = 0;
-                int n;
+        }
 
-                Console.WriteLine("Введите колличество А");
-                n = Convert.ToInt32(Console.ReadLine());
-                int[] a = new int[n];
-                Console.WriteLine("Введте коллиичество B");
-                int m =
-                    Convert.ToInt32(Console.ReadLine());
-                int[] b = new int[m];
-                element[,] c = new element[n, m];
-                Console.WriteLine("Введите a[i]");
-                for (i = 0; i < a.Length; i++)
+        static void Main(string[] args)
+        {
+            int i = 0;
+            int j = 0;
+            int n;
+
+        s1: Console.Clear();
+            Console.WriteLine("МЕТОД СЕВЕРО-ЗАПАДНОГО УГЛА");
+            Console.WriteLine("Введите сколько покупателей");
+            n = Convert.ToInt32(Console.ReadLine());
+            int[] a = new int[n];
+
+            Console.WriteLine("Введите сколько продавцов");
+            int m = Convert.ToInt32(Console.ReadLine());
+            int[] b = new int[m];
+            int suma = 0;
+            int sumb = 0;
+            Element[,] C = new Element[n, m];
+
+            Console.WriteLine("Введите сколько товара ");
+            for (i = 0; i < a.Length; i++)
+            {
+                a[i] = Convert.ToInt32(Console.ReadLine());
+                suma = suma + a[i];
+            }
+            Console.WriteLine("Введите сколько необходимо");
+            for (j = 0; j < b.Length; j++)
+            {
+                b[j] = Convert.ToInt32(Console.ReadLine());
+                sumb = sumb + b[j];
+            }
+            if (suma != sumb)
+            {
+                Console.WriteLine("Количество покупателей и продавцов не совпадает");
+                System.Threading.Thread.Sleep(1500);
+                goto s1;
+            }
+
+            Console.WriteLine("Введите цены");
+            for (i = 0; i < n; i++)
+            {
+                for (j = 0; j < m; j++)
                 {
-                    a[i] = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("Цена [{0},{1}] = ", i + 1, j + 1);
+
+                    C[i, j].Value = Convert.ToInt32(Console.ReadLine());
+
                 }
-                Console.WriteLine("Введите b[i]");
-                for (j = 0; j < b.Length; j++)
-                {
-                    b[j] = Convert.ToInt32(Console.ReadLine());
-                }
-                Console.WriteLine("Введите c[i]");
-                for (i = 0; j < n; i++)
+            }
+
+            while (true)
+            {
+            s3: Console.WriteLine();
+                for (i = 0; i < n; i++)
                 {
                     for (j = 0; j < m; j++)
                     {
-                        Console.WriteLine("a[{0},{1}] = ", i, j);
-                        c[i, j].value = Convert.ToInt32(Console.ReadLine());
+                        if (C[i, j].Delivery != 0)
+                        {
+
+                            Console.Write("{0}", C[i, j].Value);
+
+                            Console.Write("({0})", C[i, j].Delivery);
+                        }
+                        else
+                            Console.Write("{0}({1})", C[i, j].Value, C[i, j].Delivery);
                     }
+                    Console.WriteLine();
                 }
+                    Console.WriteLine();
+                    Console.WriteLine("Вы верно ввели значения? [0/1]");
+                    int ans = Int32.Parse(Console.ReadLine());
+                    if (ans == 1) break;
+                    if (ans == 0)
+                    {
+                    s2: Console.WriteLine("Выберите что вы хотите заменить:");
+                        Console.WriteLine("1.Количество имеющегося товара. \n2.Количество необходимого товара. \n3.Цены товаров.");
+                        int vib = Int32.Parse(Console.ReadLine());
+                        switch (vib)
+                        {
+                            case 1:
+                                Console.WriteLine("Введите номер записи, которую хотите изменить:");
+                                int c = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine("Введите новое значение:");
+                                a[c] = Int32.Parse(Console.ReadLine());
+                                if (suma != sumb)
+                                {
+                                    Console.WriteLine("Количество покупателей и продавцов не совпадает");
+                                    System.Threading.Thread.Sleep(1500);
+                                    goto s2;
+                                }
+                                goto s3;
+                            case 2:
+                                Console.WriteLine("Введите номер записи, которую хотите изменить:");
+                                c = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine("Введите новое значение:");
+                                b[c] = Int32.Parse(Console.ReadLine());
+                                if (suma != sumb)
+                                {
+                                    Console.WriteLine("Сколько покупателей и продавцов не совпадает");
+                                    System.Threading.Thread.Sleep(1500);
+                                    goto s2;
+                                }
+                                goto s3;
+                            case 3:
+                                Console.WriteLine("Введите номер записи, которую хотите изменить:");
+                                Console.WriteLine("Строка:");
+                                c = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine("Столбец:");
+                                int s = Int32.Parse(Console.ReadLine());
+                                Console.WriteLine("Введите новое значение:");
+                                C[c-1, s-1].Value = Convert.ToInt32(Console.ReadLine());
+                                goto s3;
+                            default:
+                                Console.WriteLine("Выбор некорректен повторите"); System.Threading.Thread.Sleep(1500);
+                                goto s2;
+                        }
+                    }
+
+                }
+
+
                 i = j = 0;
-                while(i<n&& j < m)
+                while (i < n && j < m)
                 {
+
                     try
                     {
                         if (a[i] == 0) { i++; }
                         if (b[j] == 0) { j++; }
                         if (a[i] == 0 && b[j] == 0) { i++; j++; }
-                        c[i, j].delivery = element.FingMinElement(a[i], b[j]);
-                        a[i] -= c[i, j].delivery;
-                        b[j] -= c[i, j].delivery;
+                        C[i, j].Delivery = Element.FindMinElement(a[i], b[j]);
+                        a[i] -= C[i, j].Delivery;
+                        b[j] -= C[i, j].Delivery;
 
                     }
                     catch { }
 
                 }
                 Console.Clear();
+                Console.WriteLine();
                 for (i = 0; i < n; i++)
                 {
                     for (j = 0; j < m; j++)
                     {
-                        if (c[i, j].delivery != 0)
+                        if (C[i, j].Delivery != 0)
                         {
-                            Console.Write("({0})", c[i, j].delivery);
+
+                            Console.Write("{0}", C[i, j].Value);
+
+                            Console.Write("({0})", C[i, j].Delivery);
                         }
                         else
-                            Console.Write("===", c[i, j].delivery);
-                    } Console.WriteLine();
+                            Console.Write("{0}({1})", C[i, j].Value, C[i, j].Delivery);
+                    }
+                    Console.WriteLine();
                 }
-                int ResultFubction = 0;
+                int ResultFunction = 0;
+
+                //считаем целевую функцию
                 for (i = 0; i < n; i++)
                 {
-                    for(j=0; j <m; j++)
-                    {
-                        ResultFubction += (c[i,j].value * c[i, j].delivery);
-                    }
+                    for (j = 0; j < m; j++) { ResultFunction += (C[i, j].Value * C[i, j].Delivery); }
                 }
-                Console.WriteLine("");
-                Console.WriteLine("Результат = {0}", ResultFubction);
-                i = 0;
-                j = 0;
-                int[] u = new int[n];
-                int[] v = new int[m];
-                Console.ReadLine();
+                Console.WriteLine();
+                Console.WriteLine("Ответ = {0} у.д.е.", ResultFunction);
+                Console.ReadKey();
+
             }
 
-            
         }
     }
-}
