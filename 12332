@@ -1,0 +1,103 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+namespace ConsoleApp1
+{
+    class Program
+    {
+        struct element
+        {
+            public int delivery { get; set; }
+            public int value { get; set; }
+            public static int FingMinElement(int a, int b)
+            {
+                if (a > b) return b;
+                if (a == b) { return a; }
+                else return a;
+            }
+
+            static void Main(string[] args)
+            {
+                Console.BackgroundColor = ConsoleColor.White;
+                Console.ForegroundColor = ConsoleColor.Black;
+                int i = 0;
+                int j = 0;
+                int n;
+
+                Console.WriteLine("Введите колличество А");
+                n = Convert.ToInt32(Console.ReadLine());
+                int[] a = new int[n];
+                Console.WriteLine("Введте коллиичество B");
+                int m =
+                    Convert.ToInt32(Console.ReadLine());
+                int[] b = new int[m];
+                element[,] c = new element[n, m];
+                Console.WriteLine("Введите a[i]");
+                for (i = 0; i < a.Length; i++)
+                {
+                    a[i] = Convert.ToInt32(Console.ReadLine());
+                }
+                Console.WriteLine("Введите b[i]");
+                for (j = 0; j < b.Length; j++)
+                {
+                    b[j] = Convert.ToInt32(Console.ReadLine());
+                }
+                Console.WriteLine("Введите c[i]");
+                for (i = 0; j < n; i++)
+                {
+                    for (j = 0; j < m; j++)
+                    {
+                        Console.WriteLine("a[{0},{1}] = ", i, j);
+                        c[i, j].value = Convert.ToInt32(Console.ReadLine());
+                    }
+                }
+                i = j = 0;
+                while(i<n&& j < m)
+                {
+                    try
+                    {
+                        if (a[i] == 0) { i++; }
+                        if (b[j] == 0) { j++; }
+                        if (a[i] == 0 && b[j] == 0) { i++; j++; }
+                        c[i, j].delivery = element.FingMinElement(a[i], b[j]);
+                        a[i] -= c[i, j].delivery;
+                        b[j] -= c[i, j].delivery;
+
+                    }
+                    catch { }
+
+                }
+                Console.Clear();
+                for (i = 0; i < n; i++)
+                {
+                    for (j = 0; j < m; j++)
+                    {
+                        if (c[i, j].delivery != 0)
+                        {
+                            Console.Write("({0})", c[i, j].delivery);
+                        }
+                        else
+                            Console.Write("===", c[i, j].delivery);
+                    } Console.WriteLine();
+                }
+                int ResultFubction = 0;
+                for (i = 0; i < n; i++)
+                {
+                    for(j=0; j <m; j++)
+                    {
+                        ResultFubction += (c[i,j].value * c[i, j].delivery);
+                    }
+                }
+                Console.WriteLine("");
+                Console.WriteLine("Результат = {0}", ResultFubction);
+                i = 0;
+                j = 0;
+                int[] u = new int[n];
+                int[] v = new int[m];
+                Console.ReadLine();
+            }
+
+            
+        }
+    }
+}
